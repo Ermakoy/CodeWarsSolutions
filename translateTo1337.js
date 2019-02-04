@@ -1,3 +1,4 @@
+// https://www.codewars.com/kata/translate-to-1337
 const dictionary = {
   a: ['4', '@'],
   b: ['|3', '8'],
@@ -17,11 +18,11 @@ const dictionary = {
   r: ['|Z', '|?'],
   s: ['5', '$'],
   t: ['+', '7'],
-  v: ['|/', '/'],
+  v: ['|/', '\\/'],
   w: ['\\^/', '//'],
   x: ['><', '}{'],
   y: ['`/'],
-  z: ['()']
+  z: ['(\\)']
 };
 
 function toLeet(str) {
@@ -33,12 +34,13 @@ function toLeet(str) {
       const values = dictionary[char];
       if (!values) return char;
 
-      const position =
-        char in wasUsedTimes
-          ? ((wasUsedTimes[char] = 0), wasUsedTimes[char])
-          : ++wasUsedTimes[char];
-
-      return values[position % values.length];
+      return values[
+        ((!wasUsedTimes[char]
+          ? (wasUsedTimes[char] = 1)
+          : ++wasUsedTimes[char]) -
+          1) %
+          values.length
+      ];
     })
     .join('');
 }
